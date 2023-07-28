@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main>Mikasa</main>;
+  return <main className="bg-theme-red-800 text-theme-pink-100">Mikasa</main>;
 }
