@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        '8xl': '87.5rem',
+      },
+
       colors: {
         theme: {
           white: '#ffffff',

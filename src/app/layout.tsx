@@ -19,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${merriweather_Sans.className} bg-[#141414] text-[#f2f2f2]`}
+        className={`${merriweather_Sans.className} bg-theme-gray-900 text-theme-gray-200`}
       >
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider>
+          <main className="h-full">{children}</main>
+        </ClerkProvider>
       </body>
     </html>
   );
