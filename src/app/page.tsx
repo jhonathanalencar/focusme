@@ -1,5 +1,6 @@
 'use client';
 
+import Header from '@/components/Header';
 import useCountdown from '@/hooks/useCountdown';
 
 const digitStyles =
@@ -11,6 +12,8 @@ export default function HomePage() {
     <section className="flex h-full items-center justify-center">
       <div className="flex w-full max-w-8xl justify-center p-4">
         <div className="rounded bg-theme-neutral-900 px-4 py-6 drop-shadow-md">
+          <Header />
+
           <div className="flex flex-col items-center justify-center bg-theme-neutral-800 text-center md:flex-row">
             <div className="flex items-center overflow-hidden rounded-tl-md rounded-tr-md md:gap-1">
               <div className={digitStyles}>{minutes[0]}</div>
@@ -25,7 +28,24 @@ export default function HomePage() {
             </div>
           </div>
 
-          <button onClick={startCountdown}>Start</button>
+          <button
+            type="button"
+            onClick={startCountdown}
+            className="mt-4 h-12 w-full rounded bg-theme-pink-600 text-xl font-bold uppercase text-theme-gray-100 transition-colors hover:bg-theme-pink-700"
+          >
+            Start
+          </button>
+
+          <div className="mt-6">
+            <h2 className="text-base font-bold text-theme-gray-50 md:text-xl">
+              Task
+            </h2>
+            <input
+              type="text"
+              placeholder="What are you working on?"
+              className="mt-2 w-full border-b-2 border-theme-beige-300 bg-transparent text-base text-theme-gray-200 outline-none placeholder:text-theme-gray-300"
+            />
+          </div>
         </div>
       </div>
     </section>

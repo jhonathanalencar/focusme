@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Merriweather_Sans } from 'next/font/google';
 
 import './globals.css';
+import Header from '../components/Header';
 
 const merriweather_Sans = Merriweather_Sans({ subsets: ['latin'] });
 
@@ -19,10 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${merriweather_Sans.className} bg-theme-gray-900 text-theme-gray-200`}
+        className={`${merriweather_Sans.className} flex flex-col bg-theme-gray-900 text-theme-gray-200`}
       >
         <ClerkProvider>
-          <main className="h-full">{children}</main>
+          <main className="grow">{children}</main>
         </ClerkProvider>
       </body>
     </html>
