@@ -3,7 +3,37 @@
 import Header from '@/components/Header';
 import useCountdown from '@/hooks/useCountdown';
 
-navigator.serviceWorker.register('service-worker.js');
+navigator.serviceWorker
+  .register('service-worker.js')
+  .then(async (serviceWorker) => {
+    let subscription = await serviceWorker.pushManager.getSubscription();
+
+    if (!subscription) {
+      const publicKeyResponse = await fetch(
+        'http://localhost:3333/push/public_key'
+      );
+      const publicKeyData = await publicKeyResponse.json();
+
+      subscription = await serviceWorker.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: publicKeyData.publicKey,
+      });
+    }
+
+    await fetch('http://localhost:3333/push/register', {
+      method: 'POST',
+      body: JSON.stringify({
+        subscription,
+      }),
+    });
+
+    await fetch('http://localhost:3333/push/send', {
+      method: 'POST',
+      body: JSON.stringify({
+        subscription,
+      }),
+    });
+  });
 
 const digitStyles =
   'h-32 w-24 md:rounded-md text-8xl leading-[128px] text-theme-gray-100 md:h-48 md:w-32 md:text-9xl md:leading-[192px]';
