@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SignInButton } from '@clerk/nextjs';
@@ -9,7 +10,7 @@ import logo from '@/assets/logo.png';
 export default function Header() {
   return (
     <header className="w-full ">
-      <div className="mx-auto flex w-full max-w-8xl items-center justify-between py-4">
+      <div className="mx-auto flex w-full max-w-2xl items-center justify-between p-4">
         <Link href="/" className="shrink-0">
           <Image
             src={logo}
