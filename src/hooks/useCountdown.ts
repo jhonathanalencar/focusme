@@ -11,6 +11,8 @@ export default function useCountdown(durationInMinutes: number) {
   const seconds = String(currentTime % 60).padStart(2, '0');
 
   function startCountdown() {
+    window.Notification.requestPermission();
+
     interval.current = setInterval(() => {
       updateCountdown();
     }, 1000);
@@ -30,6 +32,9 @@ export default function useCountdown(durationInMinutes: number) {
   useEffect(() => {
     if (currentTime === 0) {
       stopCountdown();
+      new window.Notification('Break', {
+        body: 'testing',
+      });
     }
   }, [currentTime]);
 

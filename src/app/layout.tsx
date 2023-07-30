@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Merriweather_Sans } from 'next/font/google';
 
 import './globals.css';
-import Header from '../components/Header';
 
 const merriweather_Sans = Merriweather_Sans({ subsets: ['latin'] });
 

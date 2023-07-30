@@ -3,6 +3,8 @@
 import Header from '@/components/Header';
 import useCountdown from '@/hooks/useCountdown';
 
+navigator.serviceWorker.register('service-worker.js');
+
 const digitStyles =
   'h-32 w-24 md:rounded-md text-8xl leading-[128px] text-theme-gray-100 md:h-48 md:w-32 md:text-9xl md:leading-[192px]';
 export default function HomePage() {
