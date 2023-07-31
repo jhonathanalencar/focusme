@@ -3,9 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SignInButton } from '@clerk/nextjs';
 
-import { ClockCounterClockwise, GearSix, SignIn, Timer } from '@/lib/phosphor';
+import { ClockCounterClockwise, SignIn, Timer } from '@/lib/phosphor';
 
 import logo from '@/assets/logo.png';
+
+import TimerOptionsButton from './TimerOptionsButton';
 
 export default function Header() {
   return (
@@ -43,12 +45,8 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <button>
-              <GearSix
-                className="h-6 w-6 transition-colors hover:text-theme-red-400"
-                weight="bold"
-              />
-            </button>
+            <TimerOptionsButton />
+
             <button>
               <SignInButton>
                 <SignIn
