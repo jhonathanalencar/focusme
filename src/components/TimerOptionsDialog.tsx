@@ -1,8 +1,17 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { useFormContext } from 'react-hook-form';
 
 import { X } from '@/lib/phosphor';
 
+import Input from './Input';
+import { TimerFormInputs } from '@/app/components/TimerFormContext';
+
 export default function TimerOptionsDialog() {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<TimerFormInputs>();
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 flex justify-center bg-theme-black/60 p-4">
@@ -23,35 +32,29 @@ export default function TimerOptionsDialog() {
             </Dialog.Close>
           </div>
 
-          <h2 className="mt-2 text-base font-medium text-theme-gray-200">
+          <h2 className="mt-2 text-base font-bold text-theme-gray-200">
             Time (minutes)
           </h2>
 
-          <div className="mt-1 flex items-center gap-3">
-            <label className="flex flex-col items-start">
-              <span className="text-base font-bold text-theme-gray-300">
-                Duration
-              </span>
-              <input
-                type="number"
-                className="h-8 w-20 rounded bg-theme-gray-900 px-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800"
-                min={1}
-                defaultValue={90}
-              />
-            </label>
+          <Input
+            type="number"
+            autoComplete="off"
+            min={1}
+            label="Duration"
+            error={!!errors.duration}
+            errorMessage={errors.duration?.message}
+            {...register('duration', { valueAsNumber: true })}
+          />
 
-            <label className="flex flex-col items-start">
-              <span className="text-base font-bold text-theme-gray-300">
-                Break
-              </span>
-              <input
-                type="number"
-                className="h-8 w-20 rounded bg-theme-gray-900 px-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800"
-                min={1}
-                defaultValue={20}
-              />
-            </label>
-          </div>
+          <Input
+            type="number"
+            autoComplete="off"
+            min={1}
+            label="Break"
+            error={!!errors.breakTime}
+            errorMessage={errors.breakTime?.message}
+            {...register('breakTime', { valueAsNumber: true })}
+          />
         </Dialog.Content>
       </Dialog.Overlay>
     </Dialog.Portal>
