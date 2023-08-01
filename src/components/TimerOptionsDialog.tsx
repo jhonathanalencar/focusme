@@ -6,7 +6,13 @@ import { X } from '@/lib/phosphor';
 import Input from './Input';
 import { TimerFormInputs } from '@/app/components/TimerFormContext';
 
-export default function TimerOptionsDialog() {
+interface TimerOptionsDialogProps {
+  isTimerActive: boolean;
+}
+
+export default function TimerOptionsDialog({
+  isTimerActive,
+}: TimerOptionsDialogProps) {
   const {
     register,
     formState: { errors },
@@ -43,6 +49,7 @@ export default function TimerOptionsDialog() {
             label="Duration"
             error={!!errors.duration}
             errorMessage={errors.duration?.message}
+            disabled={isTimerActive}
             {...register('duration', { valueAsNumber: true })}
           />
 
@@ -53,6 +60,7 @@ export default function TimerOptionsDialog() {
             label="Break"
             error={!!errors.breakTime}
             errorMessage={errors.breakTime?.message}
+            disabled={isTimerActive}
             {...register('breakTime', { valueAsNumber: true })}
           />
         </Dialog.Content>

@@ -1,4 +1,5 @@
 'use client';
+
 import { ReactNode } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,8 +27,5 @@ export default function TimerFormContext({ children }: TimerFormContextProps) {
     mode: 'all',
   });
 
-  async function onSubmit(data: TimerFormInputs) {
-    console.log(data);
-  }
   return <FormProvider {...methods}>{children}</FormProvider>;
 }
