@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { TimerFormInputs } from '@/app/components/TimerFormContext';
 
 import logo from '@/assets/logo.png';
+import notificationSound from '@/assets/tiny-bell.mp3';
 
 export default function useCountdown() {
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -19,10 +20,10 @@ export default function useCountdown() {
   } = useFormContext<TimerFormInputs>();
 
   const isDurationInvalid = getFieldState('duration').invalid;
-  const defaultDuration = defaultValues?.duration ?? 0.1;
+  const defaultDuration = defaultValues?.duration ?? 0;
 
   const isBreakTimeInvalid = getFieldState('breakTime').invalid;
-  const defaultBreakTime = defaultValues?.duration ?? 0.1;
+  const defaultBreakTime = defaultValues?.duration ?? 0;
 
   const durationInMinutes = isDurationInvalid
     ? defaultDuration
@@ -31,10 +32,8 @@ export default function useCountdown() {
     ? defaultBreakTime
     : watch().breakTime;
 
-  // const timeInSeconds = durationInMinutes * 60;
-  const timeInSeconds = 0.1 * 60;
-  // const breakTimeInSeconds = breakTimeInMinutes * 60;
-  const breakTimeInSeconds = 0.15 * 60;
+  const timeInSeconds = durationInMinutes * 60;
+  const breakTimeInSeconds = breakTimeInMinutes * 60;
 
   const currentTime = hadBreak
     ? breakTimeInSeconds - elapsedTime
@@ -73,17 +72,22 @@ export default function useCountdown() {
     setElapsedTime((prev) => prev + 1);
   }
 
+  function playSound() {
+    const audio = new Audio(notificationSound);
+    audio.play();
+  }
+
   useEffect(() => {
     if (currentTime === 0 && isTimerActive) {
       stopCountdown();
+      playSound();
+
       if (hadBreak) {
         new window.Notification('Time to focus!', {
-          // body: 'Time to take a break!',
           icon: logo.src,
         });
       } else {
         new window.Notification('Time to take a break!', {
-          // body: 'Time to take a break!',
           icon: logo.src,
         });
       }
