@@ -7,7 +7,14 @@ import TimerForm from './TimerForm';
 import TimerOptionsButton from '@/components/TimerOptionsButton';
 
 export default function Timer() {
-  const { minutes, seconds, startCountdown, isTimerActive } = useCountdown();
+  const {
+    minutes,
+    seconds,
+    isTimerActive,
+    hadBreak,
+    startCountdown,
+    interruptCountdown,
+  } = useCountdown();
 
   return (
     <>
@@ -16,7 +23,12 @@ export default function Timer() {
       </div>
 
       <Countdown minutes={minutes} seconds={seconds} />
-      <TimerForm startCountdown={startCountdown} />
+      <TimerForm
+        startCountdown={startCountdown}
+        interruptCountdown={interruptCountdown}
+        isTimerActive={isTimerActive}
+        hadBreak={hadBreak}
+      />
     </>
   );
 }

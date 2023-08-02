@@ -68,6 +68,16 @@ export default function useCountdown() {
     setElapsedTime(0);
   }
 
+  function interruptCountdown() {
+    if (interval.current) {
+      clearInterval(interval.current);
+    }
+    interval.current = null;
+
+    setIsTimerActive(false);
+    setElapsedTime(0);
+  }
+
   function updateCountdown() {
     setElapsedTime((prev) => prev + 1);
   }
@@ -110,7 +120,9 @@ export default function useCountdown() {
   return {
     minutes,
     seconds,
-    startCountdown,
     isTimerActive,
+    hadBreak,
+    startCountdown,
+    interruptCountdown,
   };
 }
