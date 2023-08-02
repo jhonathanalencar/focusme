@@ -26,12 +26,17 @@ export default function UserMenuDropdown({ user }: UserMenuDropdownProps) {
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className="roundend bg-theme-gray-800 px-4 py-2 drop-shadow-md">
-          <DropdownMenu.Group>
-            <DropdownMenu.Item onClick={() => signOut()}>
+        <DropdownMenu.Content className="mt-2 rounded bg-theme-gray-800 shadow-md drop-shadow-md">
+          <DropdownMenu.Group className="flex flex-col gap-1 p-1">
+            <DropdownMenu.Item
+              className="cursor-pointer rounded px-4 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800 data-[highlighted]:bg-theme-gray-600"
+              onClick={() => signOut()}
+            >
               Sign Out
             </DropdownMenu.Item>
           </DropdownMenu.Group>
+
+          <DropdownMenu.Arrow fill="#2b2b2b" />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
