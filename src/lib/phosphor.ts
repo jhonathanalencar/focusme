@@ -6,4 +6,6 @@ export {
   Timer,
   ClockCounterClockwise,
   X,
+  Clock,
+  SpeakerHigh,
 } from '@phosphor-icons/react';

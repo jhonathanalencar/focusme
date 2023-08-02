@@ -20,7 +20,7 @@ function Input(
   return (
     <>
       <label className="mt-1 flex w-fit flex-col items-start">
-        <span className="text-base font-medium text-theme-gray-300 ">
+        <span className="text-base font-medium tracking-wide text-theme-gray-300">
           {label}
         </span>
         <input ref={ref} className={inputClasses} {...props} />
