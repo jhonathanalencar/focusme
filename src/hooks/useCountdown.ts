@@ -17,6 +17,7 @@ export default function useCountdown() {
     watch,
     getFieldState,
     formState: { defaultValues },
+    resetField,
   } = useFormContext<TimerFormInputs>();
 
   const isDurationInvalid = getFieldState('duration').invalid;
@@ -76,6 +77,7 @@ export default function useCountdown() {
 
     setIsTimerActive(false);
     setElapsedTime(0);
+    resetField('task');
   }
 
   function updateCountdown() {

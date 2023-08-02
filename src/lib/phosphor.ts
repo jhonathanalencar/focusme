@@ -8,4 +8,5 @@ export {
   X,
   Clock,
   SpeakerHigh,
+  NoteBlank,
 } from '@phosphor-icons/react';

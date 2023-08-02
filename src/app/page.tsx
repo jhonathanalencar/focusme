@@ -38,17 +38,6 @@ export default function HomePage() {
       <div className="flex w-full max-w-8xl justify-center p-4">
         <div className="h-fit w-full max-w-2xl rounded bg-theme-neutral-900 p-6 drop-shadow-md">
           <Timer />
-
-          <div className="mt-6">
-            <h2 className="text-base font-bold text-theme-gray-50 md:text-xl">
-              Task
-            </h2>
-            <input
-              type="text"
-              placeholder="What are you working on?"
-              className="mt-2 w-full border-b-2 border-theme-beige-300 bg-transparent text-base text-theme-gray-200 outline-none placeholder:text-theme-gray-300"
-            />
-          </div>
         </div>
       </div>
     </section>

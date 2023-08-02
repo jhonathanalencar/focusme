@@ -5,6 +5,7 @@ import useCountdown from '@/hooks/useCountdown';
 import Countdown from './Countdown';
 import TimerForm from './TimerForm';
 import TimerOptionsButton from '@/components/TimerOptionsButton';
+import TimerTask from './TimerTask';
 
 export default function Timer() {
   const {
@@ -29,6 +30,8 @@ export default function Timer() {
         isTimerActive={isTimerActive}
         hadBreak={hadBreak}
       />
+
+      <TimerTask isTimerActive={isTimerActive} />
     </>
   );
 }
