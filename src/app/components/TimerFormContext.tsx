@@ -8,6 +8,7 @@ import { z } from 'zod';
 const timerFormSchema = z.object({
   duration: z.number().int().positive(),
   breakTime: z.number().int().positive(),
+  playSound: z.boolean(),
   task: z.string().trim().optional(),
 });
 
@@ -23,6 +24,7 @@ export default function TimerFormContext({ children }: TimerFormContextProps) {
     defaultValues: {
       duration: 90,
       breakTime: 20,
+      playSound: true,
     },
     mode: 'all',
   });

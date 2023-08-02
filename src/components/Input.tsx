@@ -12,7 +12,7 @@ function Input(
   ref: LegacyRef<HTMLInputElement> | undefined
 ) {
   const inputClasses = twMerge(
-    'h-8 w-20 rounded bg-theme-gray-900 px-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800 border',
+    'h-8 w-20 rounded bg-theme-gray-900 px-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800 border disabled:cursor-not-allowed disabled:opacity-80',
     error ? 'border-theme-beige-100' : 'border-transparent',
     className
   );
@@ -23,7 +23,7 @@ function Input(
         <span className="text-base font-medium tracking-wide text-theme-gray-300">
           {label}
         </span>
-        <input ref={ref} className={inputClasses} {...props} />
+        <input {...props} ref={ref} className={inputClasses} />
       </label>
       {error && errorMessage ? (
         <p className="mt-1 text-sm font-medium text-theme-red-300">

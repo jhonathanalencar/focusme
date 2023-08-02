@@ -1,5 +1,5 @@
 import { ReactNode, cloneElement } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { Clock, SpeakerHigh, X } from '@/lib/phosphor';
@@ -18,6 +18,7 @@ export default function TimerOptionsDialog({
   const {
     register,
     formState: { errors },
+    control,
   } = useFormContext<TimerFormInputs>();
 
   return (
@@ -85,7 +86,19 @@ export default function TimerOptionsDialog({
             >
               Play Sound
             </label>
-            <Switch id="play-sound" />
+            <Controller
+              control={control}
+              name="playSound"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Switch
+                  id="play-sound"
+                  onCheckedChange={onChange}
+                  checked={value}
+                  onBlur={onBlur}
+                  disabled={isTimerActive}
+                />
+              )}
+            />
           </div>
         </Dialog.Content>
       </Dialog.Overlay>
