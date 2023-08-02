@@ -19,7 +19,20 @@ export default function TimerOptionsDialog({
     register,
     formState: { errors },
     control,
+    watch,
   } = useFormContext<TimerFormInputs>();
+
+  function handleSaveSettings() {
+    const storageSettingsKey = '@focusme:settings:0.0.1';
+    const settingsData = watch();
+
+    delete settingsData.task;
+
+    window.localStorage.setItem(
+      storageSettingsKey,
+      JSON.stringify(settingsData)
+    );
+  }
 
   return (
     <Dialog.Portal>
@@ -99,6 +112,18 @@ export default function TimerOptionsDialog({
                 />
               )}
             />
+          </div>
+
+          <Divisor />
+
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={handleSaveSettings}
+              className="rounded bg-theme-gray-600 px-4 py-2 font-bold text-gray-300 transition-colors hover:bg-theme-gray-500"
+            >
+              Save Settings
+            </button>
           </div>
         </Dialog.Content>
       </Dialog.Overlay>
