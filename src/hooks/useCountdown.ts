@@ -20,6 +20,8 @@ export default function useCountdown() {
     resetField,
   } = useFormContext<TimerFormInputs>();
 
+  const isPlaySound = watch().playSound;
+
   const isDurationInvalid = getFieldState('duration').invalid;
   const defaultDuration = defaultValues?.duration ?? 0;
 
@@ -92,7 +94,10 @@ export default function useCountdown() {
   useEffect(() => {
     if (currentTime === 0 && isTimerActive) {
       stopCountdown();
-      playSound();
+
+      if (isPlaySound) {
+        playSound();
+      }
 
       if (hadBreak) {
         new window.Notification('Time to focus!', {

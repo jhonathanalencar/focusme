@@ -120,7 +120,8 @@ export default function TimerOptionsDialog({
             <button
               type="button"
               onClick={handleSaveSettings}
-              className="rounded bg-theme-gray-600 px-4 py-2 font-bold text-gray-300 transition-colors hover:bg-theme-gray-500"
+              disabled={isTimerActive}
+              className="rounded bg-theme-gray-600 px-4 py-2 font-bold text-gray-300 transition-colors hover:bg-theme-gray-500 disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:bg-theme-gray-600"
             >
               Save Settings
             </button>
