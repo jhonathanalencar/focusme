@@ -12,9 +12,12 @@ export default async function Header() {
   const user = await currentUser();
 
   return (
-    <header className="w-full ">
+    <header className="w-full">
       <div className="mx-auto flex w-full max-w-2xl items-center justify-between p-4">
-        <Link href="/" className="shrink-0">
+        <Link
+          href="/"
+          className="shrink-0 rounded-full focus-visible:text-theme-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-900"
+        >
           <Image
             src={logo}
             alt="focus me logo"
@@ -27,17 +30,20 @@ export default async function Header() {
           <nav>
             <ul className="flex items-center gap-2">
               <li>
-                <Link href="/">
+                <Link href="/" className="group focus-visible:outline-none">
                   <Timer
-                    className="h-6 w-6 transition-colors hover:text-theme-red-400"
+                    className="h-6 w-6 rounded transition-colors hover:text-theme-red-400 group-focus-visible:text-theme-red-400 group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-theme-red-400 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-theme-gray-900"
                     weight="bold"
                   />
                 </Link>
               </li>
               <li>
-                <Link href="/history">
+                <Link
+                  href="/history"
+                  className="group focus-visible:outline-none"
+                >
                   <ClockCounterClockwise
-                    className="h-6 w-6 transition-colors hover:text-theme-red-400"
+                    className="h-6 w-6 rounded transition-colors hover:text-theme-red-400 group-focus-visible:text-theme-red-400 group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-theme-red-400 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-theme-gray-900"
                     weight="bold"
                   />
                 </Link>

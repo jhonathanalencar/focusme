@@ -45,7 +45,7 @@ export default function TimerOptionsDialog({
 
             <Dialog.Close
               aria-label="Close Dialog"
-              className="group rounded focus-visible:bg-theme-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800"
+              className="group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800"
             >
               <X
                 className="h-6 w-6 text-theme-gray-100 transition-colors hover:text-theme-red-400 group-focus-visible:text-theme-red-400"
@@ -121,7 +121,7 @@ export default function TimerOptionsDialog({
               type="button"
               onClick={handleSaveSettings}
               disabled={isTimerActive}
-              className="rounded bg-theme-gray-600 px-4 py-2 font-bold text-gray-300 transition-colors hover:bg-theme-gray-500 disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:bg-theme-gray-600"
+              className="rounded bg-theme-gray-600 px-4 py-2 font-bold text-gray-300 transition-colors hover:bg-theme-gray-500 focus-visible:bg-theme-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-gray-800 disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:bg-theme-gray-600"
             >
               Save Settings
             </button>
