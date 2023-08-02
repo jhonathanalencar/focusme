@@ -36,7 +36,7 @@ export default function HomePage() {
   return (
     <section className="flex h-full justify-center">
       <div className="flex w-full max-w-8xl justify-center p-4">
-        <div className="h-fit w-full max-w-2xl rounded bg-theme-neutral-900 p-6 drop-shadow-md">
+        <div className="flex h-fit w-full max-w-2xl flex-col items-center gap-4">
           <Timer />
         </div>
       </div>

@@ -45,6 +45,8 @@ export default function useCountdown() {
   const minutes = String(Math.floor(currentTime / 60)).padStart(2, '0');
   const seconds = String(currentTime % 60).padStart(2, '0');
 
+  const progressPercentage = (elapsedTime * 100) / timeInSeconds;
+
   function startCountdown() {
     window.Notification.requestPermission();
 
@@ -127,6 +129,7 @@ export default function useCountdown() {
   return {
     minutes,
     seconds,
+    progressPercentage,
     isTimerActive,
     hadBreak,
     startCountdown,
