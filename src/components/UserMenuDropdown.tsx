@@ -15,7 +15,7 @@ export default function UserMenuDropdown({ user }: UserMenuDropdownProps) {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
+      <DropdownMenu.Trigger aria-label="User Options" id="user-menu">
         <Image
           src={user?.imageUrl ?? profilePicturePlaceholder}
           alt="user profile picture"

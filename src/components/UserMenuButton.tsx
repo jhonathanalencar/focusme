@@ -22,7 +22,7 @@ export default function UsermenuButton({ user }: UsermenuButtonProps) {
       </SignedIn>
 
       <SignedOut>
-        <button onClick={() => openSignIn()}>
+        <button onClick={() => openSignIn({ redirectUrl: '/' })}>
           <SignIn className="h-6 w-6" weight="bold" />
         </button>
       </SignedOut>

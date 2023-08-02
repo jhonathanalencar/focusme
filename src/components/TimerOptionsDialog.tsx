@@ -46,6 +46,7 @@ export default function TimerOptionsDialog({
             type="number"
             autoComplete="off"
             min={1}
+            max={99}
             label="Duration"
             error={!!errors.duration}
             errorMessage={errors.duration?.message}
@@ -57,6 +58,7 @@ export default function TimerOptionsDialog({
             type="number"
             autoComplete="off"
             min={1}
+            max={99}
             label="Break"
             error={!!errors.breakTime}
             errorMessage={errors.breakTime?.message}

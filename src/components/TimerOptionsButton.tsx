@@ -16,7 +16,11 @@ export default function TimerOptionsButton({
 
   return (
     <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <Dialog.Trigger aria-label="Timer Options" title="Timer Options">
+      <Dialog.Trigger
+        aria-label="Timer Options"
+        aria-controls="timer-options"
+        title="Timer Options"
+      >
         <GearSix
           className="h-6 w-6 transition-colors hover:text-theme-red-400"
           weight="bold"
