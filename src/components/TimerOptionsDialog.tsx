@@ -1,4 +1,3 @@
-import { ReactNode, cloneElement } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import * as Dialog from '@radix-ui/react-dialog';
 
@@ -7,6 +6,7 @@ import { Clock, SpeakerHigh, X } from '@/lib/phosphor';
 import Input from './Input';
 import { TimerFormInputs } from '@/app/components/TimerFormContext';
 import Switch from './Switch';
+import { OptionGroup } from './OptionGroup';
 
 interface TimerOptionsDialogProps {
   isTimerActive: boolean;
@@ -109,25 +109,3 @@ export default function TimerOptionsDialog({
 function Divisor() {
   return <div className="my-3 h-[1px] w-full bg-theme-gray-600" />;
 }
-
-function OptionGroupRoot({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="mt-2 flex items-center gap-2 text-base font-bold text-theme-gray-200">
-      {children}
-    </h2>
-  );
-}
-
-function OptionGroupIcon({ icon }: { icon: JSX.Element }) {
-  return cloneElement(icon, { className: 'h-5 w-5', weight: 'fill' });
-}
-
-function OptionGroupTitle({ children }: { children: ReactNode }) {
-  return <span>{children}</span>;
-}
-
-const OptionGroup = {
-  Root: OptionGroupRoot,
-  Icon: OptionGroupIcon,
-  Title: OptionGroupTitle,
-};
