@@ -1,15 +1,16 @@
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SignInButton } from '@clerk/nextjs';
 
-import { ClockCounterClockwise, SignIn, Timer } from '@/lib/phosphor';
+import { ClockCounterClockwise, Timer } from '@/lib/phosphor';
 
 import logo from '@/assets/logo.png';
 
-import TimerOptionsButton from './TimerOptionsButton';
+import UserMenuButton from './UserMenuButton';
+import { currentUser } from '@clerk/nextjs';
 
-export default function Header() {
+export default async function Header() {
+  const user = await currentUser();
+
   return (
     <header className="w-full ">
       <div className="mx-auto flex w-full max-w-2xl items-center justify-between p-4">
@@ -44,16 +45,7 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2">
-            <button>
-              <SignInButton>
-                <SignIn
-                  className="h-6 w-6 transition-colors hover:text-theme-red-400"
-                  weight="bold"
-                />
-              </SignInButton>
-            </button>
-          </div>
+          <UserMenuButton user={{ imageUrl: user?.imageUrl }} />
         </div>
       </div>
     </header>

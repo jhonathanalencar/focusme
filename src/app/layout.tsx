@@ -20,17 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={`${merriweather_Sans.className} flex flex-col bg-theme-gray-900 text-theme-gray-200`}
-      >
-        <ClerkProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${merriweather_Sans.className} flex flex-col bg-theme-gray-900 text-theme-gray-200`}
+        >
           <TimerFormContext>
             <Header />
             <main className="grow">{children}</main>
           </TimerFormContext>
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
