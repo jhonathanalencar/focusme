@@ -6,6 +6,24 @@ import { TimerFormInputs } from '@/app/components/TimerFormContext';
 import logo from '@/assets/logo.png';
 import notificationSound from '@/assets/tiny-bell.mp3';
 
+function getStorageSettigns(): TimerSettins {
+  const storageSettignsKey = '@focusme:settings:0.0.1';
+
+  if (typeof window !== 'undefined') {
+    const storageJSON = window.localStorage.getItem(storageSettignsKey);
+
+    if (storageJSON) {
+      return JSON.parse(storageJSON);
+    }
+  }
+
+  return {
+    duration: 90,
+    breakTime: 20,
+    playSound: true,
+  };
+}
+
 export default function useCountdown() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -18,6 +36,7 @@ export default function useCountdown() {
     getFieldState,
     formState: { defaultValues },
     resetField,
+    setValue,
   } = useFormContext<TimerFormInputs>();
 
   const isPlaySound = watch().playSound;
@@ -92,6 +111,15 @@ export default function useCountdown() {
     const audio = new Audio(notificationSound);
     audio.play();
   }
+
+  useEffect(() => {
+    const data = getStorageSettigns();
+
+    setValue('duration', data.duration);
+    setValue('breakTime', data.breakTime);
+    setValue('playSound', data.playSound);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (currentTime === 0 && isTimerActive) {

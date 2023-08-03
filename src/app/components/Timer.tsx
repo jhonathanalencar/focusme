@@ -29,6 +29,7 @@ export default function Timer() {
         </div>
 
         <Countdown minutes={minutes} seconds={seconds} />
+
         <TimerForm
           startCountdown={startCountdown}
           interruptCountdown={interruptCountdown}
