@@ -8,7 +8,8 @@ import {
   useState,
 } from 'react';
 import { useFormContext } from 'react-hook-form';
-
+import { differenceInSeconds } from 'date-fns';
+import dayjs from 'dayjs';
 import { type Break, type Cycle, useCyclesStore } from '@/stores/cycles';
 
 import { TimerFormInputs } from '@/app/components/TimerFormContext';
@@ -35,16 +36,11 @@ interface CycleContextProviderProps {
 }
 
 export function CycleContextProvider({ children }: CycleContextProviderProps) {
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const [isCycleActive, setIsCycleActive] = useState(false);
-  const [hadBreak, setHadBreak] = useState(false);
-
   const interval = useRef<NodeJS.Timer | null>(null);
 
   const state = useCyclesStore.getState().state;
   const actions = useCyclesStore.getState().actions;
 
-  const { activeCycle, cycleBreak } = state;
   const {
     startNewCycle,
     startBreak,
@@ -52,6 +48,39 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
     resetCycle,
     interruptActiveCycle,
   } = actions;
+
+  const { activeCycle, cycleBreak } = state;
+
+  const [hadBreak, setHadBreak] = useState(() => {
+    if (cycleBreak) {
+      return true;
+    }
+
+    return false;
+  });
+
+  const [isCycleActive, setIsCycleActive] = useState(() => {
+    if (activeCycle || cycleBreak) {
+      return true;
+    }
+    return false;
+  });
+
+  const [elapsedTime, setElapsedTime] = useState(() => {
+    if (activeCycle) {
+      interval.current = setInterval(() => {
+        updateCountdown();
+      }, 1000);
+      return dayjs(new Date()).diff(new Date(activeCycle.startDate), 's');
+    } else if (cycleBreak) {
+      interval.current = setInterval(() => {
+        updateCountdown();
+      }, 1000);
+      return dayjs(new Date()).diff(new Date(cycleBreak.startDate), 's');
+    }
+
+    return 0;
+  });
 
   const {
     watch,
@@ -72,17 +101,22 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
     : watch().duration;
   const breakInMinutes = isBreakInvalid ? defaultBreak : watch().breakTime;
 
-  const durationInSeconds = durationInMinutes * 60;
-  const breakInSeconds = breakInMinutes * 60;
+  const durationInSeconds = activeCycle
+    ? activeCycle.duration * 60
+    : durationInMinutes * 60;
+  const breakInSeconds = cycleBreak
+    ? cycleBreak.duration * 60
+    : breakInMinutes * 60;
 
-  const currentTime = hadBreak
-    ? breakInSeconds - elapsedTime
-    : durationInSeconds - elapsedTime;
+  const currentTime =
+    hadBreak || cycleBreak
+      ? breakInSeconds - elapsedTime
+      : durationInSeconds - elapsedTime;
 
   const minutes = String(Math.floor(currentTime / 60)).padStart(2, '0');
   const seconds = String(Math.floor(currentTime % 60)).padStart(2, '0');
 
-  const progressPercentage = (elapsedTime * 100) / durationInSeconds;
+  const progressPercentage = (elapsedTime * 100) / durationInSeconds || 0;
 
   const updateCountdown = useCallback(() => {
     setElapsedTime((prev) => prev + 1);
@@ -144,6 +178,14 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   const playSound = useCallback(() => {
     const audio = new Audio(notificationSound);
     audio.play();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (interval.current) {
+        clearInterval(interval.current);
+      }
+    };
   }, []);
 
   useEffect(() => {

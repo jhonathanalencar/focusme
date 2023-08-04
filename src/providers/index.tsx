@@ -15,18 +15,21 @@ interface providersProps {
 function getStorageState(): CyclesState {
   const storageSettignsKey = '@focusme:0.0.1';
 
-  const storageJSON = window.localStorage.getItem(storageSettignsKey);
+  if (typeof window !== 'undefined') {
+    const storageJSON = window.localStorage.getItem(storageSettignsKey);
 
-  if (storageJSON) {
-    return JSON.parse(storageJSON);
-  } else {
-    return {
-      cycles: [],
-      activeCycle: undefined,
-      cycleBreak: undefined,
-    };
+    if (storageJSON) {
+      return JSON.parse(storageJSON);
+    }
   }
+
+  return {
+    cycles: [],
+    activeCycle: undefined,
+    cycleBreak: undefined,
+  };
 }
+
 const state = getStorageState();
 
 export default function Providers({ children }: providersProps) {
