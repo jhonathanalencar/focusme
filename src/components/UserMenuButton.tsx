@@ -2,7 +2,7 @@
 
 import { useClerk, SignedIn, SignedOut } from '@clerk/nextjs';
 
-import { SignIn } from '@/lib/phosphor';
+import { SignIn } from '@/libs/phosphor';
 
 import UserMenuDropdown from './UserMenuDropdown';
 

@@ -1,7 +1,7 @@
 import { useFormContext, Controller } from 'react-hook-form';
 import * as Dialog from '@radix-ui/react-dialog';
 
-import { Clock, SpeakerHigh, X } from '@/lib/phosphor';
+import { Clock, SpeakerHigh, X } from '@/libs/phosphor';
 
 import Input from './Input';
 import { TimerFormInputs } from '@/app/components/TimerFormContext';

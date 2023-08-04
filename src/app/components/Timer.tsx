@@ -20,7 +20,7 @@ export default function Timer() {
   } = useCountdown();
 
   return (
-    <>
+    <div className="flex animate-fade flex-col items-center gap-4">
       <ProgressBar progressPercentage={progressPercentage} />
 
       <div className="w-full bg-theme-neutral-900 p-6 drop-shadow-md">
@@ -39,6 +39,6 @@ export default function Timer() {
 
         <TimerTask isTimerActive={isTimerActive} />
       </div>
-    </>
+    </div>
   );
 }

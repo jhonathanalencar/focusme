@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 
-import { GearSix } from '@/lib/phosphor';
+import { GearSix } from '@/libs/phosphor';
 
 import TimerOptionsDialog from './TimerOptionsDialog';
 

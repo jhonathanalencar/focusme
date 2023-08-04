@@ -10,7 +10,15 @@ module.exports = {
       maxWidth: {
         '8xl': '87.5rem',
       },
-
+      animation: {
+        fade: 'fade 1s ease-in-out',
+      },
+      keyframes: {
+        fade: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+      },
       colors: {
         theme: {
           white: '#ffffff',

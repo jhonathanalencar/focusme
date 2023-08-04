@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ClockCounterClockwise, Timer } from '@/lib/phosphor';
+import { ClockCounterClockwise, Timer } from '@/libs/phosphor';
 
 import logo from '@/assets/logo.png';
 

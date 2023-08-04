@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { TimerFormInputs } from './TimerFormContext';
+import { useCyclesStore } from '@/stores/pomodoro';
 
 interface TimerFormProps {
   isTimerActive: boolean;
@@ -16,6 +17,9 @@ export default function TimerForm({
   hadBreak,
 }: TimerFormProps) {
   const { handleSubmit } = useFormContext<TimerFormInputs>();
+
+  const cycle = useCyclesStore.getState().state.cycles;
+  console.log(cycle);
 
   async function onSubmit(data: TimerFormInputs) {
     console.log(data);
