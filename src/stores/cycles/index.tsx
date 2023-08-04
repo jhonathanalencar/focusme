@@ -16,16 +16,16 @@ export type Break = {
 
 type CyclesActions = {
   startNewCycle: (cycle: Cycle) => void;
-  markActiveCycleAsCompleted: () => void;
-  setBreak: () => void;
-  interruptActiveCycle: () => void;
+  markActiveCycleAsCompleted: (cycleId: string) => void;
+  startBreak: (cycleBreak: Break) => void;
+  interruptActiveCycle: (cycleId: string) => void;
   resetCycle: () => void;
 };
 
 export type CyclesState = {
   cycles: Cycle[];
   activeCycle: Cycle | undefined;
-  Cyclebreak: Break | undefined;
+  cycleBreak: Break | undefined;
 };
 
 export type Store = {
@@ -37,7 +37,7 @@ export const useCyclesStore = create<Store>((set) => ({
   state: {
     cycles: [],
     activeCycle: undefined,
-    Cyclebreak: undefined,
+    cycleBreak: undefined,
   },
   actions: {
     startNewCycle: (cycle) =>
@@ -48,9 +48,51 @@ export const useCyclesStore = create<Store>((set) => ({
           cycles: [...state.state.cycles, cycle],
         },
       })),
-    markActiveCycleAsCompleted: () => ({}),
-    setBreak: () => ({}),
-    interruptActiveCycle: () => ({}),
-    resetCycle: () => ({}),
+    markActiveCycleAsCompleted: (cycleId) =>
+      set((state) => ({
+        state: {
+          ...state.state,
+          activeCycle: undefined,
+          cycles: state.state.cycles.map((cycle) => {
+            if (cycle.id === cycleId) {
+              return {
+                ...cycle,
+                finishDate: new Date(),
+              };
+            }
+            return cycle;
+          }),
+        },
+      })),
+    startBreak: (cycleBreak) =>
+      set((state) => ({
+        state: {
+          ...state.state,
+          cycleBreak,
+        },
+      })),
+    interruptActiveCycle: (cycleId) =>
+      set((state) => ({
+        state: {
+          ...state.state,
+          activeCycle: undefined,
+          cycles: state.state.cycles.map((cycle) => {
+            if (cycle.id === cycleId) {
+              return {
+                ...cycle,
+                interruptDate: new Date(),
+              };
+            }
+            return cycle;
+          }),
+        },
+      })),
+    resetCycle: () =>
+      set((state) => ({
+        state: {
+          ...state.state,
+          cycleBreak: undefined,
+        },
+      })),
   },
 }));

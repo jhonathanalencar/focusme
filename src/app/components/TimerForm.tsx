@@ -1,7 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 import { nanoid } from 'nanoid';
 
-import { TimerFormInputs } from './TimerFormContext';
+import type { TimerFormInputs } from './TimerFormContext';
+import type { Cycle } from '@/stores/cycles';
 
 interface TimerFormProps {
   isCycleActive: boolean;
@@ -19,11 +20,9 @@ export default function TimerForm({
   const { handleSubmit } = useFormContext<TimerFormInputs>();
 
   async function onSubmit(data: TimerFormInputs) {
-    console.log(data);
     startCountdown({
       id: nanoid(),
       duration: data.duration,
-      break: data.breakTime,
       startDate: new Date(),
       task: data.task,
     });

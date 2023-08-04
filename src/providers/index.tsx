@@ -5,7 +5,8 @@ import { ReactNode } from 'react';
 import TimerFormContext from '@/app/components/TimerFormContext';
 import { CycleContextProvider } from '@/contexts/CycleContex';
 import InitializerStore from '@/stores/InitializerStore';
-import { CyclesState } from '@/stores/cycles';
+
+import type { CyclesState } from '@/stores/cycles';
 
 interface providersProps {
   children: ReactNode;
@@ -22,7 +23,7 @@ function getStorageState(): CyclesState {
     return {
       cycles: [],
       activeCycle: undefined,
-      Cyclebreak: undefined,
+      cycleBreak: undefined,
     };
   }
 }

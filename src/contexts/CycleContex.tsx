@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useCyclesStore } from '@/stores/cycles';
+import { type Break, type Cycle, useCyclesStore } from '@/stores/cycles';
 
 import { TimerFormInputs } from '@/app/components/TimerFormContext';
 
@@ -17,6 +17,8 @@ import logo from '@/assets/logo.png';
 import notificationSound from '@/assets/tiny-bell.mp3';
 
 type CycleContextData = {
+  activeCycle: Cycle | undefined;
+  cycleBreak: Break | undefined;
   minutes: string;
   seconds: string;
   progressPercentage: number;
@@ -40,8 +42,16 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   const interval = useRef<NodeJS.Timer | null>(null);
 
   const state = useCyclesStore.getState().state;
+  const actions = useCyclesStore.getState().actions;
 
-  const { activeCycle, cycles, Cyclebreak } = state;
+  const { activeCycle, cycleBreak } = state;
+  const {
+    startNewCycle,
+    startBreak,
+    markActiveCycleAsCompleted,
+    resetCycle,
+    interruptActiveCycle,
+  } = actions;
 
   const {
     watch,
@@ -78,8 +88,6 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
     setElapsedTime((prev) => prev + 1);
   }, []);
 
-  const startNewCycle = useCyclesStore.getState().actions.startNewCycle;
-
   const startCountdown = useCallback(
     (cycle: Cycle) => {
       window.Notification.requestPermission();
@@ -96,8 +104,13 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   );
 
   const stopCountdown = useCallback(() => {
-    if (!hadBreak) {
+    if (!hadBreak && activeCycle) {
       setHadBreak(true);
+      markActiveCycleAsCompleted(activeCycle.id);
+      startBreak({
+        duration: breakInMinutes,
+        startDate: new Date(),
+      });
     } else {
       if (interval.current) {
         clearInterval(interval.current);
@@ -106,9 +119,11 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
 
       setIsCycleActive(false);
       setHadBreak(false);
+      resetCycle();
     }
     setElapsedTime(0);
-  }, [hadBreak]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hadBreak, activeCycle, breakInMinutes]);
 
   const interruptCountdown = useCallback(() => {
     if (interval.current) {
@@ -119,8 +134,12 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
     setIsCycleActive(false);
     setElapsedTime(0);
     resetField('task');
+
+    if (activeCycle) {
+      interruptActiveCycle(activeCycle.id);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [activeCycle]);
 
   const playSound = useCallback(() => {
     const audio = new Audio(notificationSound);
@@ -168,6 +187,8 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   return (
     <CycleContext.Provider
       value={{
+        activeCycle,
+        cycleBreak,
         minutes,
         seconds,
         isCycleActive,
