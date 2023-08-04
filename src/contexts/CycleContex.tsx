@@ -1,5 +1,3 @@
-'use client';
-
 import {
   ReactNode,
   createContext,
@@ -10,6 +8,8 @@ import {
   useState,
 } from 'react';
 import { useFormContext } from 'react-hook-form';
+
+import { useCyclesStore } from '@/stores/cycles';
 
 import { TimerFormInputs } from '@/app/components/TimerFormContext';
 
@@ -33,12 +33,15 @@ interface CycleContextProviderProps {
 }
 
 export function CycleContextProvider({ children }: CycleContextProviderProps) {
-  const [activeCycle, setActiveCycle] = useState<Cycle | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isCycleActive, setIsCycleActive] = useState(false);
   const [hadBreak, setHadBreak] = useState(false);
 
   const interval = useRef<NodeJS.Timer | null>(null);
+
+  const state = useCyclesStore.getState().state;
+
+  const { activeCycle, cycles, Cyclebreak } = state;
 
   const {
     watch,
@@ -54,16 +57,10 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   const isBreakInvalid = getFieldState('breakTime').invalid;
   const defaultBreak = defaultValues?.breakTime ?? 0;
 
-  const durationInMinutes = activeCycle
-    ? activeCycle.duration
-    : isDurationInvalid
+  const durationInMinutes = isDurationInvalid
     ? defaultDuration
     : watch().duration;
-  const breakInMinutes = activeCycle
-    ? activeCycle.break
-    : isBreakInvalid
-    ? defaultBreak
-    : watch().breakTime;
+  const breakInMinutes = isBreakInvalid ? defaultBreak : watch().breakTime;
 
   const durationInSeconds = durationInMinutes * 60;
   const breakInSeconds = breakInMinutes * 60;
@@ -81,17 +78,20 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
     setElapsedTime((prev) => prev + 1);
   }, []);
 
+  const startNewCycle = useCyclesStore.getState().actions.startNewCycle;
+
   const startCountdown = useCallback(
     (cycle: Cycle) => {
       window.Notification.requestPermission();
 
-      // setActiveCycle(cycle);
+      startNewCycle(cycle);
       setIsCycleActive(true);
 
       interval.current = setInterval(() => {
         updateCountdown();
       }, 1000);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [updateCountdown]
   );
 
@@ -126,6 +126,11 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
     const audio = new Audio(notificationSound);
     audio.play();
   }, []);
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(state);
+    window.localStorage.setItem('@focusme:0.0.1', stateJSON);
+  }, [state]);
 
   useEffect(() => {
     if (currentTime === 0 && isCycleActive) {

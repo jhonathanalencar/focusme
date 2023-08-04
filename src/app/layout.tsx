@@ -5,13 +5,11 @@ import type { Metadata } from 'next';
 import { Merriweather_Sans } from 'next/font/google';
 
 import Header from '@/components/Header';
-import TimerFormContext from './components/TimerFormContext';
-import { CycleContextProvider } from '@/contexts/CycleContex';
+import Providers from '@/providers';
 
 const merriweather_Sans = Merriweather_Sans({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  // title: 'FocusMe - Pomodoro Timer',
   description: 'Pomodoro timer to boost your productivity',
 };
 
@@ -26,12 +24,10 @@ export default function RootLayout({
         <body
           className={`${merriweather_Sans.className} flex flex-col bg-theme-gray-900 text-theme-gray-200`}
         >
-          <TimerFormContext>
-            <CycleContextProvider>
-              <Header />
-              <main className="grow">{children}</main>
-            </CycleContextProvider>
-          </TimerFormContext>
+          <Providers>
+            <Header />
+            <main className="grow">{children}</main>
+          </Providers>
         </body>
       </html>
     </ClerkProvider>

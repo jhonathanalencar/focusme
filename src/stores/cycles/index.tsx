@@ -1,41 +1,56 @@
 import { create } from 'zustand';
 
-type Cycle = {
+export type Cycle = {
   id: string;
   duration: number;
-  break: number;
+  startDate: Date;
   task?: string;
+  finishDate?: Date;
+  interruptDate?: Date;
 };
 
-type Actions = {
-  start: (cycle: Cycle) => void;
+export type Break = {
+  duration: number;
+  startDate: Date;
 };
 
-type Store = {
-  state: {
-    cycles: Cycle[];
-    activeCycle: Cycle | undefined;
-    activeCycleId: string | undefined;
-  };
-  actions: Actions;
+type CyclesActions = {
+  startNewCycle: (cycle: Cycle) => void;
+  markActiveCycleAsCompleted: () => void;
+  setBreak: () => void;
+  interruptActiveCycle: () => void;
+  resetCycle: () => void;
+};
+
+export type CyclesState = {
+  cycles: Cycle[];
+  activeCycle: Cycle | undefined;
+  Cyclebreak: Break | undefined;
+};
+
+export type Store = {
+  state: CyclesState;
+  actions: CyclesActions;
 };
 
 export const useCyclesStore = create<Store>((set) => ({
   state: {
     cycles: [],
     activeCycle: undefined,
-    activeCycleId: undefined,
+    Cyclebreak: undefined,
   },
   actions: {
-    start: (cycle) => {
-      return set((state) => ({
+    startNewCycle: (cycle) =>
+      set((state) => ({
         state: {
           ...state.state,
           activeCycle: cycle,
-          activeCycleId: cycle.id,
           cycles: [...state.state.cycles, cycle],
         },
-      }));
-    },
+      })),
+    markActiveCycleAsCompleted: () => ({}),
+    setBreak: () => ({}),
+    interruptActiveCycle: () => ({}),
+    resetCycle: () => ({}),
   },
 }));
