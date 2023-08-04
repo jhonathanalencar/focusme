@@ -1,4 +1,4 @@
-import { ClientOnly } from './components/ClientOnly';
+import { ClientOnly } from '../components/ClientOnly';
 import Timer from './components/Timer';
 
 // navigator.serviceWorker
