@@ -5,24 +5,7 @@ import { TimerFormInputs } from '@/app/components/TimerFormContext';
 
 import logo from '@/assets/logo.png';
 import notificationSound from '@/assets/tiny-bell.mp3';
-
-function getStorageSettigns(): TimerSettins {
-  const storageSettignsKey = '@focusme:settings:0.0.1';
-
-  if (typeof window !== 'undefined') {
-    const storageJSON = window.localStorage.getItem(storageSettignsKey);
-
-    if (storageJSON) {
-      return JSON.parse(storageJSON);
-    }
-  }
-
-  return {
-    duration: 90,
-    breakTime: 20,
-    playSound: true,
-  };
-}
+import { useCyclesStore } from '@/stores/cycles';
 
 export default function useCountdown() {
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -36,7 +19,6 @@ export default function useCountdown() {
     getFieldState,
     formState: { defaultValues },
     resetField,
-    setValue,
   } = useFormContext<TimerFormInputs>();
 
   const isPlaySound = watch().playSound;
@@ -66,31 +48,33 @@ export default function useCountdown() {
 
   const progressPercentage = (elapsedTime * 100) / timeInSeconds;
 
-  function startCountdown() {
-    window.Notification.requestPermission();
+  // function startCountdown(cycle: Cycle) {
+  //   window.Notification.requestPermission();
 
-    interval.current = setInterval(() => {
-      updateCountdown();
-    }, 1000);
+  //   useCyclesStore.getState().actions.start(cycle);
 
-    setIsTimerActive(true);
-    setElapsedTime(0);
-  }
+  //   interval.current = setInterval(() => {
+  //     updateCountdown();
+  //   }, 1000);
 
-  function stopCountdown() {
-    if (!hadBreak) {
-      setHadBreak(true);
-    } else {
-      if (interval.current) {
-        clearInterval(interval.current);
-      }
-      interval.current = null;
-      setIsTimerActive(false);
-      setHadBreak(false);
-    }
+  //   setIsTimerActive(true);
+  //   setElapsedTime(0);
+  // }
 
-    setElapsedTime(0);
-  }
+  // function stopCountdown() {
+  //   if (!hadBreak) {
+  //     setHadBreak(true);
+  //   } else {
+  //     if (interval.current) {
+  //       clearInterval(interval.current);
+  //     }
+  //     interval.current = null;
+  //     setIsTimerActive(false);
+  //     setHadBreak(false);
+  //   }
+
+  //   setElapsedTime(0);
+  // }
 
   function interruptCountdown() {
     if (interval.current) {
@@ -103,56 +87,47 @@ export default function useCountdown() {
     resetField('task');
   }
 
-  function updateCountdown() {
-    setElapsedTime((prev) => prev + 1);
-  }
+  // function updateCountdown() {
+  //   setElapsedTime((prev) => prev + 1);
+  // }
 
   function playSound() {
     const audio = new Audio(notificationSound);
     audio.play();
   }
 
-  useEffect(() => {
-    const data = getStorageSettigns();
+  // useEffect(() => {
+  //   if (currentTime === 0 && isTimerActive) {
+  //     stopCountdown();
 
-    setValue('duration', data.duration);
-    setValue('breakTime', data.breakTime);
-    setValue('playSound', data.playSound);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //     if (isPlaySound) {
+  //       playSound();
+  //     }
 
-  useEffect(() => {
-    if (currentTime === 0 && isTimerActive) {
-      stopCountdown();
+  //     if (hadBreak) {
+  //       new window.Notification('Time to focus!', {
+  //         icon: logo.src,
+  //       });
+  //     } else {
+  //       new window.Notification('Time to take a break!', {
+  //         icon: logo.src,
+  //       });
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [currentTime]);
 
-      if (isPlaySound) {
-        playSound();
-      }
-
-      if (hadBreak) {
-        new window.Notification('Time to focus!', {
-          icon: logo.src,
-        });
-      } else {
-        new window.Notification('Time to take a break!', {
-          icon: logo.src,
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTime]);
-
-  useEffect(() => {
-    if (isTimerActive) {
-      if (hadBreak) {
-        document.title = `${minutes}:${seconds} - Time for a break`;
-      } else {
-        document.title = `${minutes}:${seconds} - Time to focus`;
-      }
-    } else {
-      document.title = 'FocusMe - Pomodoro Timer';
-    }
-  }, [minutes, seconds, isTimerActive, hadBreak]);
+  // useEffect(() => {
+  //   if (isTimerActive) {
+  //     if (hadBreak) {
+  //       document.title = `${minutes}:${seconds} - Time for a break`;
+  //     } else {
+  //       document.title = `${minutes}:${seconds} - Time to focus`;
+  //     }
+  //   } else {
+  //     document.title = 'FocusMe - Pomodoro Timer';
+  //   }
+  // }, [minutes, seconds, isTimerActive, hadBreak]);
 
   return {
     minutes,
@@ -160,7 +135,7 @@ export default function useCountdown() {
     progressPercentage,
     isTimerActive,
     hadBreak,
-    startCountdown,
+    // startCountdown,
     interruptCountdown,
   };
 }

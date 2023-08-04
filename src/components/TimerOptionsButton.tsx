@@ -6,11 +6,11 @@ import { GearSix } from '@/libs/phosphor';
 import TimerOptionsDialog from './TimerOptionsDialog';
 
 interface TimerOptionsButtonProps {
-  isTimerActive: boolean;
+  isCycleActive: boolean;
 }
 
 export default function TimerOptionsButton({
-  isTimerActive,
+  isCycleActive,
 }: TimerOptionsButtonProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -28,7 +28,7 @@ export default function TimerOptionsButton({
         />
       </Dialog.Trigger>
 
-      <TimerOptionsDialog isTimerActive={isTimerActive} />
+      <TimerOptionsDialog isTimerActive={isCycleActive} />
     </Dialog.Root>
   );
 }

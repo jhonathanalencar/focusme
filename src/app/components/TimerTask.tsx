@@ -5,10 +5,10 @@ import { TimerFormInputs } from './TimerFormContext';
 import { NoteBlank } from '@phosphor-icons/react';
 
 interface TimerTaskProps {
-  isTimerActive: boolean;
+  isCycleActive: boolean;
 }
 
-export default function TimerTask({ isTimerActive }: TimerTaskProps) {
+export default function TimerTask({ isCycleActive }: TimerTaskProps) {
   const { register, watch } = useFormContext<TimerFormInputs>();
 
   const task = watch().task;
@@ -18,7 +18,7 @@ export default function TimerTask({ isTimerActive }: TimerTaskProps) {
       <h2 className="text-base font-bold text-theme-gray-50 md:text-xl">
         Task
       </h2>
-      {isTimerActive ? (
+      {isCycleActive ? (
         task ? (
           <div className="relative mt-2 rounded bg-theme-neutral-600 px-3 py-2 leading-snug shadow-sm">
             <div className="absolute left-0 top-0 h-full w-2 rounded-bl rounded-tl bg-theme-beige-300 " />

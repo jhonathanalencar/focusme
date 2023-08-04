@@ -1,23 +1,22 @@
 'use client';
 
-import useCountdown from '@/hooks/useCountdown';
-
 import Countdown from './Countdown';
 import TimerForm from './TimerForm';
 import TimerOptionsButton from '@/components/TimerOptionsButton';
 import TimerTask from './TimerTask';
 import ProgressBar from './ProgressBar';
+import { useCycleContext } from '@/contexts/CycleContex';
 
 export default function Timer() {
   const {
     minutes,
     seconds,
-    isTimerActive,
-    hadBreak,
-    progressPercentage,
     startCountdown,
+    progressPercentage,
+    isCycleActive,
+    hadBreak,
     interruptCountdown,
-  } = useCountdown();
+  } = useCycleContext();
 
   return (
     <div className="flex animate-fade flex-col items-center gap-4">
@@ -25,7 +24,7 @@ export default function Timer() {
 
       <div className="w-full bg-theme-neutral-900 p-6 drop-shadow-md">
         <div className="flex justify-end pb-3">
-          <TimerOptionsButton isTimerActive={isTimerActive} />
+          <TimerOptionsButton isCycleActive={isCycleActive} />
         </div>
 
         <Countdown minutes={minutes} seconds={seconds} />
@@ -33,11 +32,11 @@ export default function Timer() {
         <TimerForm
           startCountdown={startCountdown}
           interruptCountdown={interruptCountdown}
-          isTimerActive={isTimerActive}
+          isCycleActive={isCycleActive}
           hadBreak={hadBreak}
         />
 
-        <TimerTask isTimerActive={isTimerActive} />
+        <TimerTask isCycleActive={isCycleActive} />
       </div>
     </div>
   );

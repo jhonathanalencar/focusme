@@ -8,3 +8,11 @@ type TimerSettins = {
   breakTime: number;
   playSound: boolean;
 };
+
+type Cycle = {
+  id: string;
+  duration: number;
+  break: number;
+  startDate: Date;
+  task?: string;
+};

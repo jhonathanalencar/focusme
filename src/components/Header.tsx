@@ -24,6 +24,7 @@ export default async function Header() {
             width={36}
             height={36}
             className="rounded-full"
+            priority
           />
         </Link>
         <div className="flex items-center gap-4">

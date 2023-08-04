@@ -1,34 +1,37 @@
 import { useFormContext } from 'react-hook-form';
+import { nanoid } from 'nanoid';
 
 import { TimerFormInputs } from './TimerFormContext';
-import { useCyclesStore } from '@/stores/pomodoro';
 
 interface TimerFormProps {
-  isTimerActive: boolean;
+  isCycleActive: boolean;
   hadBreak: boolean;
-  startCountdown: () => void;
+  startCountdown: (cycle: Cycle) => void;
   interruptCountdown: () => void;
 }
 
 export default function TimerForm({
   startCountdown,
-  isTimerActive,
+  isCycleActive,
   interruptCountdown,
   hadBreak,
 }: TimerFormProps) {
   const { handleSubmit } = useFormContext<TimerFormInputs>();
 
-  const cycle = useCyclesStore.getState().state.cycles;
-  console.log(cycle);
-
   async function onSubmit(data: TimerFormInputs) {
     console.log(data);
-    startCountdown();
+    startCountdown({
+      id: nanoid(),
+      duration: data.duration,
+      break: data.breakTime,
+      startDate: new Date(),
+      task: data.task,
+    });
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {isTimerActive ? (
+      {isCycleActive ? (
         <button
           type="button"
           onClick={interruptCountdown}

@@ -16,7 +16,6 @@ type Store = {
     cycles: Cycle[];
     activeCycle: Cycle | undefined;
     activeCycleId: string | undefined;
-    timerConfig: TimerSettins;
   };
   actions: Actions;
 };
@@ -26,11 +25,6 @@ export const useCyclesStore = create<Store>((set) => ({
     cycles: [],
     activeCycle: undefined,
     activeCycleId: undefined,
-    timerConfig: {
-      duration: 90,
-      breakTime: 20,
-      playSound: true,
-    },
   },
   actions: {
     start: (cycle) => {
