@@ -8,8 +8,8 @@ import {
   useState,
 } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { differenceInSeconds } from 'date-fns';
 import dayjs from 'dayjs';
+
 import { type Break, type Cycle, useCyclesStore } from '@/stores/cycles';
 
 import { TimerFormInputs } from '@/app/components/TimerFormContext';
@@ -18,6 +18,7 @@ import logo from '@/assets/logo.png';
 import notificationSound from '@/assets/tiny-bell.mp3';
 
 type CycleContextData = {
+  cycles: Cycle[];
   activeCycle: Cycle | undefined;
   cycleBreak: Break | undefined;
   minutes: string;
@@ -49,7 +50,7 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
     interruptActiveCycle,
   } = actions;
 
-  const { activeCycle, cycleBreak } = state;
+  const { cycles, activeCycle, cycleBreak } = state;
 
   const [hadBreak, setHadBreak] = useState(() => {
     if (cycleBreak) {
@@ -229,6 +230,7 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   return (
     <CycleContext.Provider
       value={{
+        cycles,
         activeCycle,
         cycleBreak,
         minutes,
