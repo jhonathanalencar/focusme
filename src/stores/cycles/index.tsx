@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
 
 export type Cycle = {
   id: string;
@@ -33,50 +34,42 @@ export type Store = {
   actions: CyclesActions;
 };
 
-export const useCyclesStore = create<Store>((set) => ({
-  state: {
-    cycles: [],
-    activeCycle: undefined,
-    cycleBreak: undefined,
-  },
-  actions: {
-    startNewCycle: (cycle) =>
-      set((state) => ({
-        state: {
-          ...state.state,
-          activeCycle: cycle,
-          cycles: [...state.state.cycles, cycle],
-        },
-      })),
-    markActiveCycleAsCompleted: (cycleId) =>
-      set((state) => ({
-        state: {
-          ...state.state,
-          activeCycle: undefined,
-          cycles: state.state.cycles.map((cycle) => {
+export const useCyclesStore = create(
+  immer<Store>((set) => ({
+    state: {
+      cycles: [],
+      activeCycle: undefined,
+      cycleBreak: undefined,
+    },
+    actions: {
+      startNewCycle: (cycle) =>
+        set((state) => {
+          state.state.cycles.push(cycle);
+          state.state.activeCycle = cycle;
+        }),
+      markActiveCycleAsCompleted: (cycleId) =>
+        set((state) => {
+          const tempCycles = state.state.cycles.map((cycle) => {
             if (cycle.id === cycleId) {
               return {
                 ...cycle,
                 finishDate: new Date(),
               };
             }
+
             return cycle;
-          }),
-        },
-      })),
-    startBreak: (cycleBreak) =>
-      set((state) => ({
-        state: {
-          ...state.state,
-          cycleBreak,
-        },
-      })),
-    interruptActiveCycle: (cycleId) =>
-      set((state) => ({
-        state: {
-          ...state.state,
-          activeCycle: undefined,
-          cycles: state.state.cycles.map((cycle) => {
+          });
+
+          state.state.activeCycle = undefined;
+          state.state.cycles = tempCycles;
+        }),
+      startBreak: (cycleBreak) =>
+        set((state) => {
+          state.state.cycleBreak = cycleBreak;
+        }),
+      interruptActiveCycle: (cycleId) =>
+        set((state) => {
+          const tempCycles = state.state.cycles.map((cycle) => {
             if (cycle.id === cycleId) {
               return {
                 ...cycle,
@@ -84,15 +77,15 @@ export const useCyclesStore = create<Store>((set) => ({
               };
             }
             return cycle;
-          }),
-        },
-      })),
-    resetCycle: () =>
-      set((state) => ({
-        state: {
-          ...state.state,
-          cycleBreak: undefined,
-        },
-      })),
-  },
-}));
+          });
+
+          state.state.activeCycle = undefined;
+          state.state.cycles = tempCycles;
+        }),
+      resetCycle: () =>
+        set((state) => {
+          state.state.cycleBreak = undefined;
+        }),
+    },
+  }))
+);
