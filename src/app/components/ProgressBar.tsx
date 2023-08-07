@@ -1,5 +1,3 @@
-'use client';
-
 import * as Progress from '@radix-ui/react-progress';
 
 interface ProgressBarprops {

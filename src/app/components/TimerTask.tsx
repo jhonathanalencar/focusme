@@ -1,8 +1,7 @@
-'use client';
-
 import { useFormContext } from 'react-hook-form';
+
 import { TimerFormInputs } from './TimerFormContext';
-import { NoteBlank } from '@phosphor-icons/react';
+import { NoteBlank } from '@/libs/phosphor';
 
 interface TimerTaskProps {
   isCycleActive: boolean;
