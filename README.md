@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">FocusMe</h1>
 
-## Getting Started
+<p align="center">
+  <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=ac7c59&labelColor=4b2428">
+</p>
 
-First, run the development server:
+<br>
+
+<p align="center">
+  <img src=".github/preview.png" width="100%">
+</p>
+
+## 💻 Projeto
+
+Aplicação para aumentar a produtividade e manter o foco usando a [técnica pomodoro](https://pt.wikipedia.org/wiki/T%C3%A9cnica_pomodoro).
+
+## 🧪 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Prisma](https://www.prisma.io/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [Radix](https://www.radix-ui.com/)
+
+## 🚀 Como executar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+# Clone este repositório
+$ git clone https://github.com/jhonathanalencar/focusme.git
+
+# Entre na pasta
+$ cd focusme
+
+# Instale as dependências
+$ npm install
+
+# Preencha e copie as variáveis de ambiente do arquivo .env.example para o arquivo .env na raiz do projeto
+
+# Execute a aplicação em modo de desenvolvimento
+$ npm run dev
+
+# A aplicação inciará na porta:3000
+acesse <http://localhost:3000>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Licença
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/87830705/254344973-58fb1280-be15-4847-95bd-c99236abdb4b.png" width="5%">
+</p>
