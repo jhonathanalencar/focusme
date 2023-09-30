@@ -68,7 +68,7 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   });
 
   const [elapsedTime, setElapsedTime] = useState(() => {
-    if (activeCycle) {
+    if (activeCycle && !cycleBreak) {
       interval.current = setInterval(() => {
         updateCountdown();
       }, 1000);
