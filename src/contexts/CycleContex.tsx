@@ -68,12 +68,13 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   });
 
   const [elapsedTime, setElapsedTime] = useState(() => {
-    if (activeCycle && !cycleBreak) {
+    if (activeCycle) {
       interval.current = setInterval(() => {
         updateCountdown();
       }, 1000);
       return dayjs(new Date()).diff(new Date(activeCycle.startDate), 's');
-    } else if (cycleBreak) {
+    }
+    if (cycleBreak) {
       interval.current = setInterval(() => {
         updateCountdown();
       }, 1000);
@@ -195,6 +196,7 @@ export function CycleContextProvider({ children }: CycleContextProviderProps) {
   }, [state]);
 
   useEffect(() => {
+    if (currentTime < 0) stopCountdown();
     if (currentTime === 0 && isCycleActive) {
       stopCountdown();
 
